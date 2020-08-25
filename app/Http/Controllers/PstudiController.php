@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-
+use App\Pstudi;
 class PstudiController extends Controller
 {
     /**
@@ -13,7 +13,9 @@ class PstudiController extends Controller
      */
     public function index()
     {
-        return view('admin.pstudi.index');
+        $data = Pstudi::latest()->paginate(7);
+        return view('admin.pstudi.index', compact('data'))
+            ->with('i', (request()->input('page', 1) -1) *7);
     }
 
     /**
@@ -23,7 +25,7 @@ class PstudiController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.pstudi.create');
     }
 
     /**
@@ -34,7 +36,9 @@ class PstudiController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        Pstudi::create($request->all());
+        return redirect()->route('pstudi.index')
+                        ->with('success', 'Program Studi created successfully.');
     }
 
     /**
@@ -54,9 +58,9 @@ class PstudiController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Pstudi $pstudi)
     {
-        //
+        return view('admin.pstudi.edit', compact('pstudi'));
     }
 
     /**
@@ -66,9 +70,12 @@ class PstudiController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Pstudi $pstudi)
     {
-        //
+        $pstudi->update($request->all());
+        return redirect()->route('pstudi.index')
+                        ->with('success', 'Program Studi Updated successfully.');
+
     }
 
     /**
@@ -77,8 +84,10 @@ class PstudiController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Pstudi $pstudi)
     {
-        //
+        $pstudi->delete();
+        return redirect()->route('pstudi.index')
+                        ->with('success','Program Studi Deleted Successfully.');
     }
 }

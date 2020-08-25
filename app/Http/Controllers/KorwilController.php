@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-
+use App\Korwil;
 class KorwilController extends Controller
 {
     /**
@@ -13,7 +13,9 @@ class KorwilController extends Controller
      */
     public function index()
     {
-        return view('admin.korwil.index');
+        $data = Korwil::latest()->paginate(10);
+        return view('admin.korwil.index', compact('data'))
+            ->with('i', (request()->input('page', 1) -1) * 10);
     }
 
     /**
@@ -23,7 +25,7 @@ class KorwilController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.korwil.create');
     }
 
     /**
@@ -34,7 +36,9 @@ class KorwilController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        Korwil::create($request->all());
+        return redirect()->route('korwil.index')
+                        ->with ('success','Korwil created successfully.');
     }
 
     /**
@@ -43,9 +47,9 @@ class KorwilController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Korwil $korwil)
     {
-        //
+        return view('admin.korwil.show', compact('korwil'));
     }
 
     /**
@@ -54,9 +58,9 @@ class KorwilController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Korwil $korwil)
     {
-        //
+        return view('admin.korwil.edit', compact('korwil'));
     }
 
     /**
@@ -66,9 +70,11 @@ class KorwilController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Korwil $korwil)
     {
-        //
+        $korwil->update($request->all());
+        return redirect()->route('korwil.index')
+                        ->with('success','Korwil Updated successfully.');
     }
 
     /**
@@ -77,8 +83,10 @@ class KorwilController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Korwil $korwil)
     {
-        //
+        $korwil->delete();
+        return redirect()->route('korwil.index')
+                ->with('success', 'Data Korwil Deleted Successfully.');
     }
 }

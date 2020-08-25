@@ -14,15 +14,20 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('home');
+    return view('welcome');
 });
 
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 
-
-Route::resource('/kampus', 'KampusController');
+Route::resource('/universitas', 'UniversitasController');
 Route::resource('/korwil', 'KorwilController');
 Route::resource('/pstudi', 'PstudiController');
 Route::resource('/mahasiswa', 'MahasiswaController');
+Route::get('/mahasiswa/pdf','MahasiswaController@createPDF');
+Route::get('/mahasiswa/export','MahasiswaController@export');
+
+Route::get('/nexmo','NexmoController@index');
+Route::post('/nexmo','NexmoController@store')->name('nexmo.submit');
+Route::get('/getPDF','PDFController@getPDF');

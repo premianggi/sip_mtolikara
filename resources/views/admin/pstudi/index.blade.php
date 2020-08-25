@@ -5,7 +5,7 @@
 @section('content')
     <div class="col-xs-12">
         <div class="box-header">
-         <a href="" class="btn btn-success btn-sm"><i class="fa fa-plus-square"></i>Tambah Data</a>
+         <a href="{{route('pstudi.create')}}" class="btn btn-success btn-sm"><i class="fa fa-plus-square"></i>Tambah Data</a>
 
           <div class="box-tools">
             <div class="input-group input-group-sm hidden-xs" style="width: 150px;">
@@ -17,6 +17,11 @@
             </div>
           </div>
         </div>
+        @if ($message = Session::get('success'))
+        <div class="alert alert-success">
+            <p>{{ $message }}</p>
+        </div>
+        @endif
         <!-- /.box-header -->
         <div class="box-body table-responsive no-padding">
           <table class="table table-hover">
@@ -24,29 +29,22 @@
               <th>Nama Program Studi</th>
               <th>Aksi</th>
             </tr>
+            @foreach ($data as $pstudi)
             <tr>
-              <td>Pulau Sumatera</td>
+              <td>{{$pstudi->nama_pstudi}}</td>
               <td>
-                  <a href="#" class="btn btn-info btn-sm"><i class="fa fa-edit"></i>Edit</a>
-                  <a href="#" class="btn btn-danger btn-sm"><i class="fa fa-trash"></i>Hapus</a>
+                <form action="{{route('pstudi.destroy', $pstudi->id)}}" method="post">
+                  <a href="{{route('pstudi.edit', $pstudi->id)}}" class="btn btn-info btn-sm"><i class="fa fa-edit"></i>Edit</a>
+                  @csrf
+                  @method('DELETE')
+                  <button type="submit" class="btn btn-danger btn-sm"><i class="fa fa-trash"></i>Hapus</button>
+                </form>
               </td>
             </tr>
-            <tr>
-                <td>Pulau Sumatera</td>
-                <td>
-                    <a href="#" class="btn btn-info btn-sm"><i class="fa fa-edit"></i>Edit</a>
-                    <a href="#" class="btn btn-danger btn-sm"><i class="fa fa-trash"></i>Hapus</a>
-                </td>
-              </tr>
-              <tr>
-                <td>Pulau Sumatera</td>
-                <td>
-                    <a href="#" class="btn btn-info btn-sm"><i class="fa fa-edit"></i>Edit</a>
-                    <a href="#" class="btn btn-danger btn-sm"><i class="fa fa-trash"></i>Hapus</a>
-                </td>
-              </tr>
+            @endforeach
           </tbody></table>
         </div>
         <!-- /.box-body -->
       </div>
+      {!! $data->links() !!}
 @endsection

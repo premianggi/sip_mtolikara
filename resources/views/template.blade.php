@@ -50,7 +50,7 @@
           <li class="dropdown user user-menu">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
               <img src="{{asset ('backend/dist/img/user2-160x160.jpg') }}" class="user-image" alt="User Image">
-              <span class="hidden-xs">Premi Yigibalom</span>
+              <span class="hidden-xs">{{Auth::user()->name}}</span>
             </a>
             <ul class="dropdown-menu">
               <!-- User image -->
@@ -58,7 +58,7 @@
                 <img src="{{asset ('backend/dist/img/user2-160x160.jpg') }}" class="img-circle" alt="User Image">
 
                 <p>
-                    Premi Yigibalom - Web Developer
+                  {{Auth::user()->name}} - Web Developer
                   <small>Member since Nov. 2012</small>
                 </p>
               </li>
@@ -117,7 +117,7 @@
           <img src="{{asset ('backend/dist/img/user2-160x160.jpg') }}" class="img-circle" alt="User Image">
         </div>
         <div class="pull-left info">
-          <p>Premi Yigibalom</p>
+          <p>{{Auth::user()->name}}</p>
           <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
         </div>
     </div>
@@ -125,7 +125,7 @@
       <ul class="sidebar-menu" data-widget="tree">
         <li class="header">MAIN NAVIGATION</li>
         <li>
-          <a href="/">
+          <a href="/home">
             <i class="fa fa-dashboard"></i> <span>Dashboard</span>
           </a>
         </li>
@@ -134,6 +134,11 @@
               <i class="fa fa-users"></i> <span>Data Mahasiswa/i</span>
             </a>
         </li>    
+      <li>
+        <a href="/nexmo">
+          <i class="fa fa-envelope-o"></i> <span>Send SMS</span>
+       </a>
+     </li>    
         <li class="treeview">
           <a href="#">
             <i class="fa fa-folder (alias)"></i> <span>Data Master</span>
@@ -143,10 +148,15 @@
           </a>
           <ul class="treeview-menu">
             <li><a href="/korwil"><i class="fa fa-map"></i>Data Korwil</a></li>
-            <li><a href="/kampus"><i class="fa fa-bank (alias)"></i>Data Kampus</a></li>
+            <li><a href="/universitas"><i class="fa fa-bank (alias)"></i>Data Universitas</a></li>
             <li><a href="/pstudi"><i class="fa fa-book (alias)"></i>Data Program Studi</a></li>
           </ul>
         </li>
+        <li>
+          <a href="#">
+            <i class="fa fa-hdd-o"></i> <span>Backup and Sync</span>
+          </a>
+        </li>    
       </ul>
     </section>
     <!-- /.sidebar -->
@@ -186,11 +196,6 @@
         <div class="box-body">
          @yield('content')
         </div>
-        <!-- /.box-body -->
-        <div class="box-footer">
-          Footer
-        </div>
-        <!-- /.box-footer-->
       </div>
       <!-- /.box -->
 
@@ -201,9 +206,9 @@
 
   <footer class="main-footer">
     <div class="pull-right hidden-xs">
-      <b>Version</b> 2.4.13
+      <b>Version</b> 1.0
     </div>
-    <strong>Copyright &copy; 2014-2019 <a href="https://adminlte.io">AdminLTE</a>.</strong> All rights
+    <strong>Copyright &copy; 2020<a href="https://adminlte.io">Sistem Informasi Pendataan Mahasiswa Tolikara Se-Indonesia</a>.</strong> All rights
     reserved.
   </footer>
 
@@ -222,5 +227,6 @@
     $('.sidebar-menu').tree()
   })
 </script>
+
 </body>
 </html>
